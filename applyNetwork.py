@@ -5,7 +5,7 @@ import numpy
 import scipy.io
 from matplotlib import pyplot as plt
 
-model_dir = 'D:\\Derek\\Matlab\\gait_study\\algorithm\\train\\temp\\adam_6_15_15_32_2017-12-11-16-57-29.h5'
+model_dir = 'D:\\Derek\\Matlab\\gait_study\\algorithm\\train\\temp\\adam_6_30_30_32_2017-12-13-16-56-07.h5'
 model = load_model(model_dir)
 data = pandas.read_csv("D:\\Derek\\Matlab\\gait_study\\algorithm\\train\\data\\SubFeatures_stage2.csv",
                        delimiter=',', header=0)
@@ -39,5 +39,5 @@ plt.show()
 # save for external use
 weights = model.get_weights()
 scipy.io.savemat(
-    'D:\\Derek\\Matlab\\gait_study\\algorithm\\train\\temp\\export\\adam_6_15_15_32_2017-12-11-16-57-29.mat',
+    'D:\\Derek\\Matlab\\gait_study\\algorithm\\train\\temp\\export\\adam_6_30_30_32_2017-12-13-16-56-07.mat',
     mdict={'net': weights})

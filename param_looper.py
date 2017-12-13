@@ -14,7 +14,7 @@ output = "D:\\Derek\\Matlab\\gait_study\\algorithm\\train\\data\\output.csv"
 data = pandas.read_csv("D:\\Derek\\Matlab\\gait_study\\algorithm\\train\\data\\SubFeatures_stage2.csv",
                        delimiter=',', header=0)
 data_set = data.values
-SubIdxForValidate = [4, 5, 6, 11, 20]
+SubIdxForValidate = [4, 22, 6, 11, 20]
 allIndicesToValidate = []
 for idcs in SubIdxForValidate:
     temp_idcs = all_indices(idcs, list(data_set[:, 0]))
@@ -33,10 +33,10 @@ X_val = (data_set[:, [1, 2, 3, 5]])[allIndicesToValidate, :]
 Y_val = (data_set[:, 6])[allIndicesToValidate]
 print("data loaded, length = %d, proceed to define model" % (len(data_set[:, 0])))
 loop_counter = 0
-for num_neurons_1st in range(3, 20, 3):
-    for num_neurons_2nd in range(3, 20, 3):
-        for batch_size in [500, 100, 32, 10]:
-            for optim in ['adam', 'sgd', 'rmsprop', 'Adadelta']:
+for num_neurons_1st in range(3, 30, 3):
+    for num_neurons_2nd in range(3, 30, 3):
+        for batch_size in [100, 32, 10]:
+            for optim in ['adam']:
                 # define model
                 model = Sequential()
                 num_input = len(X[0, :])
@@ -46,7 +46,7 @@ for num_neurons_1st in range(3, 20, 3):
                 # compile model with adam (gradient descent)
                 model.compile(loss='mape', optimizer=optim, metrics=['mape'])
                 # fit model with input and output
-                history = model.fit(X, Y, validation_data=(X_Tr, Y_Tr), epochs=1000, batch_size=batch_size)
+                history = model.fit(X_Tr, Y_Tr, validation_data=(X_val, Y_val), epochs=1000, batch_size=batch_size)
                 min_error = min(history.history['mean_absolute_percentage_error'])
                 min_val_error = min(history.history['val_mean_absolute_percentage_error'])
                 print("train complete, minimal mape: %.2f%%" % min_error)

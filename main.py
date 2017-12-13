@@ -14,7 +14,7 @@ numpy.random.seed(27)
 data = pandas.read_csv("D:\\Derek\\Matlab\\gait_study\\algorithm\\train\\data\\SubFeatures_stage2.csv",
                        delimiter=',', header=0)
 data_set = data.values
-SubIdxForValidate = [4, 5, 6, 11, 20]
+SubIdxForValidate = [4, 22, 6, 11, 21]
 allIndicesToValidate = []
 for idcs in SubIdxForValidate:
     temp_idcs = all_indices(idcs, list(data_set[:, 0]))
@@ -35,8 +35,8 @@ print("data loaded, length = %d, proceed to define model" % (len(data_set[:, 0])
 
 # define model
 model = Sequential()
-num_neurons_1st = 15
-num_neurons_2nd = 15
+num_neurons_1st = 10
+num_neurons_2nd = 10
 optim = 'adam'
 b_size = 32
 num_input = len(X[0, :])
@@ -51,7 +51,7 @@ model.compile(loss='mape', optimizer=optim, metrics=['mape'])
 # history = model.fit(X, Y, epochs=1000, batch_size=b_size)
 
 # below line for manual validation
-history = model.fit(X, Y, validation_data=(X_Tr, Y_Tr), epochs=1000, batch_size=b_size)
+history = model.fit(X_Tr, Y_Tr, validation_data=(X_val, Y_val), epochs=1000, batch_size=b_size)
 
 min_error = min(history.history['mean_absolute_percentage_error'])
 min_val_error = min(history.history['val_mean_absolute_percentage_error'])
